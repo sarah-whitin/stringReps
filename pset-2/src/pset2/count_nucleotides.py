@@ -6,6 +6,8 @@ def countNucleotides(text: str) -> dict[str, int]:
     for i in range(0,text.__len__()):
 
         # find the key it matches
+        # note from Halie -- this is a clever workaround, but what are you gaining on line 10 vs what line 13 already does?
+        # hint: think about how the efficiency of retrieving an entry from a hashset
         for j in nucs.keys():
             if text[i:i+1] == j:
                 # and add one to the count for that key
