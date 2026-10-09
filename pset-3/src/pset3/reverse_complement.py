@@ -6,16 +6,16 @@ def reverseComplement(text: str) -> str:
     A pairs with T, and C pairs with G. Return the complementary
     nucleotides in reverse order.
     """
-    revComp = ""
 
-    for x in reversed(text):
-        if x == "A":
-            revComp = revComp + "T"
-        elif x == "T":
-            revComp = revComp + "A"
-        elif x == "C":
-            revComp = revComp + "G"
-        elif x == "G":
-            revComp = revComp + "C"
+    toReplace = ["A", "T", "C", "G"]
+    replacement = ["T", "A", "G", "C"]
+
+    for i in range(4):
+        text = text.replace(toReplace[i], replacement[i])
+    # does not work because it replaces nucleotides twice
     
+    revComp = text[::-1]
+
     return revComp
+
+print(reverseComplement("ATCG"))
