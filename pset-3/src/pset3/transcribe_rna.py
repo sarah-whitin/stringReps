@@ -6,5 +6,6 @@ def transcribeRNA(text: str) -> str:
 
     Replace each T with U, retaining the order of the other nucleotides.
     """
-    # TODO: Implement DNA-to-RNA transcription.
-    raise NotImplementedError("Implement transcribeRNA for Rosalind RNA.")
+    return(text.replace("T", "U")) #idk if this is cheating, but just know that i know that a string is immutable
+
+print(transcribeRNA("GATGGAACTTGACTACGTAAATT"))
