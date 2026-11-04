@@ -10,6 +10,6 @@ def hammingDistance(p: str, q: str) -> int:
 
     return count
 
-text1 = "GGGCCGTTGGT"
-text2 = "GGACCGTTGAC"
-print(hammingDistance(text1, text2))
+# text1 = "GGGCCGTTGGT"
+# text2 = "GGACCGTTGAC"
+# print(hammingDistance(text1, text2))
