@@ -1,26 +1,22 @@
 def frequentWordsWithMismatches(text: str, k: int, d: int) -> set[str]:
     # find all possible k-mers available
     
-    posKmers = k**4 # find how many k-mers possible
+    posKmers = 4**k # find how many k-mers possible
     allKmers = []
     for i in range(posKmers):
-        allKmers.append("")
+        allKmers.append("") # list of size of possible kmers which is 4^k
 
-    for i in range(1, k+1):
-        print(i)
-        posKmers = posKmers/4
+    for i in range(1, k+1): # this is a ridiculous way to do this
+        posKmers = posKmers/4 # size of increments we want to add of one letter at a time
         last = 1
-        times2Add = i**(i-1)
-        for k in range(0,times2Add):
-            print(times2Add)
+        times2Add = 4**(i-1) # how many times we want to go through this increment
+        for addition in range(0,times2Add):
             for allele in ["A", "G", "C", "T"]:
-                groupMax = last + posKmers
+                groupMax = last + posKmers # last sequence to add letter to
                 for j in range(int(last), int(groupMax)):
-                    print(f"add {allele} at {j}")
-                    last = groupMax
-        
-                
-            
+                    oldString = allKmers[j-1]
+                    allKmers[j-1] = oldString + allele
+                    last = groupMax # last sequence letter has been added to
 
 if __name__ == "__main__":
     text = "ACGTTGCATGTCGCATGATGCATGAGAGCT" 
