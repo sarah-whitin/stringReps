@@ -1,5 +1,4 @@
 from hamming_distance import hammingDistance
-from pattern_count import PatternCount
 
 def frequentWordsWithMismatches(text: str, k: int, d: int) -> set[str]:
     # find all possible k-mers available
