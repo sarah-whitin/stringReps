@@ -1,5 +1,7 @@
 # Problem Set 3
 
+Due date: Friday, October 23, 2026.
+
 This assignment lives in `pset-3/` within your existing `stringReps`
 repository, alongside `pset-1/` and `pset-2/`. Use the same repository for
 your work; you do not need to create a separate repository.

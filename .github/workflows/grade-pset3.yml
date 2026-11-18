@@ -1,0 +1,63 @@
+name: Instructor Grading - Pset 3
+
+on:
+  push:
+    branches: [instructor-grading]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install nbconvert ipykernel
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          fi
+
+      - name: Execute grading notebook
+        run: |
+          jupyter nbconvert --to notebook --execute --allow-errors \
+            --ExecutePreprocessor.timeout=120 \
+            grading/pset3-review.ipynb \
+            --output pset3-results.ipynb --output-dir grading
+
+      - name: Check grading results
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          notebook = json.loads(Path("grading/pset3-results.ipynb").read_text())
+          errors = [
+              output
+              for cell in notebook["cells"]
+              for output in cell.get("outputs", [])
+              if output.get("output_type") == "error"
+          ]
+          for error in errors:
+              print(f"{error['ename']}: {error['evalue']}")
+          if errors:
+              raise SystemExit("Grading notebook contains errors; see the results artifact.")
+          PYTHON
+
+      - name: Save grading results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pset3-results
+          path: grading/pset3-results.ipynb
+          if-no-files-found: ignore

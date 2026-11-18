@@ -1,0 +1,46 @@
+
+name: Instructor Grading
+
+on:
+  push:
+    branches: [instructor-grading]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install nbconvert ipykernel
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          fi
+
+      - name: Execute grading notebook
+        run: |
+          jupyter nbconvert --to notebook --execute \
+            --ExecutePreprocessor.timeout=120 \
+            grading/pset4-review.ipynb \
+            --output grading/pset4-results.ipynb
+
+      - name: Save grading results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pset4-results
+          path: grading/pset4-results.ipynb
+          if-no-files-found: ignore
+
