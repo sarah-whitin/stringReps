@@ -5,11 +5,11 @@ def stringComposition(k: int, text: str) -> list[str]:
     Given: An integer k and a string Text.
     Return: Compositionk(Text) (the k-mers can be provided in any order).   
     """
-    comp = set()
+    comp = list()
 
     for i in range(0, text.__len__()-k+1):
         word = text[i:i+k]
-        comp.add(word)
+        comp.append(word)
 
     return comp # does not return in alphabtical order because feels like an extra step (for now)
 
