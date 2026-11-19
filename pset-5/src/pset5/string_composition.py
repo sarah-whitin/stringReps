@@ -6,10 +6,10 @@ def stringComposition(k: int, text: str) -> list[str]:
     Return: Compositionk(Text) (the k-mers can be provided in any order).   
     """
     comp = list()
-
+    # find each k-mer 
     for i in range(0, text.__len__()-k+1):
         word = text[i:i+k]
-        comp.append(word)
+        comp.append(word)# add to list
 
     return comp # does not return in alphabtical order because feels like an extra step (for now)
 
